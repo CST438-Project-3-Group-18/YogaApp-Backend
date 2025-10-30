@@ -1,6 +1,6 @@
 package com.example.Project3;
 
-import com.example.Project3.entities.CollectionsE;
+import com.example.Project3.entities.Collections;
 import java.util.List;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,7 +13,7 @@ public class CollectionsController {
   }
 
   @GetMapping ("/collections")
-  List<CollectionsE> getCollections(){
+  List<Collections> getCollections(){
     return collectionsRepo.findAll();
   }
 }

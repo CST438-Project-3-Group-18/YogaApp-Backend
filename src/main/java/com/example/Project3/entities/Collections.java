@@ -4,20 +4,19 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.Table;
 
 @Entity
 //@Table(name = "collections")
-public class CollectionsE {
+public class Collections {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int id;
   private int userId;
   private String name;
 
-  public CollectionsE() {
+  public Collections() {
   }
-  public CollectionsE(int collectionId, String name) {
+  public Collections(int collectionId, String name) {
     this.userId = collectionId;
     this.name = name;
   }
