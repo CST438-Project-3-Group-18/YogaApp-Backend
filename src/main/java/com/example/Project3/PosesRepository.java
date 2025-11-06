@@ -9,5 +9,7 @@ import com.example.Project3.entities.Poses;
 public interface PosesRepository extends JpaRepository<Poses,Integer > {
 
     List<Poses> findByStyle(String style);
+
+    List<Poses> findByDifficultyIgnoreCase(String difficulty);
   
 }
