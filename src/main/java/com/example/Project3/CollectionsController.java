@@ -1,6 +1,7 @@
 package com.example.Project3;
 
 import com.example.Project3.entities.Collections;
+import java.net.URI;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import org.springframework.http.ResponseEntity;
@@ -29,4 +30,16 @@ public class CollectionsController {
         .orElse(ResponseEntity.notFound().build());
   }
 
+  @PostMapping
+  public ResponseEntity<Collections> createCollection(@RequestBody Collections data) {
+    try{
+      data.setId(null);
+      Collections saved = collectionsRepo.save(data);
+      return ResponseEntity.
+          created(URI.create("/collections/" + saved.getId()))
+          .body(saved);
+    } catch (Exception e){
+      return ResponseEntity.badRequest().build();
+    }
+  }
 }
