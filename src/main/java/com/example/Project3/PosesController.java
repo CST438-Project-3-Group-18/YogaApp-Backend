@@ -35,3 +35,19 @@ public class PosesController {
         return allPoses.get(randomIndex);
     }
 }
+    // style filtering 
+    // i want this route to be /poses/{style}
+    @GetMapping("/{style}") 
+    public List<Poses> byStyle(@PathVariable String style){
+        return posesRepo.findByStyle(style);
+    }
+
+
+    // difficulty 
+
+
+    // search by keyword in description 
+
+
+    
+}
