@@ -16,4 +16,7 @@ public class CollectionsController {
   List<Collections> getCollections(){
     return collectionsRepo.findAll();
   }
+
+
+  
 }
