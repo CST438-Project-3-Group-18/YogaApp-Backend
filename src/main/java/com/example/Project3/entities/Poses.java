@@ -13,9 +13,11 @@ public class Poses {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
     private String name;
     private String description;
+    private String style;
+    private String difficulty;
+    private String image;
 
     public Poses() {
     }
@@ -47,5 +49,29 @@ public class Poses {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getStyle() {
+        return style;
+    }
+
+    public void setStyle(String style) {
+        this.style = style;
+    }
+
+    public String getDifficulty() {
+        return difficulty;
+    }
+
+    public void setDifficulty(String difficulty) {
+        this.difficulty = difficulty;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }
