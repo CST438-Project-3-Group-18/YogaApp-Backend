@@ -2,6 +2,8 @@ package com.example.Project3;
 
 import com.example.Project3.entities.Collections;
 import java.net.URI;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import org.springframework.http.ResponseEntity;
@@ -29,7 +31,6 @@ public class CollectionsController {
         .map(ResponseEntity::ok)
         .orElse(ResponseEntity.notFound().build());
   }
-
   @PostMapping
   public ResponseEntity<Collections> createCollection(@RequestBody Collections data) {
     try{
@@ -40,6 +41,18 @@ public class CollectionsController {
           .body(saved);
     } catch (Exception e){
       return ResponseEntity.badRequest().build();
+    }
+  }
+  @DeleteMapping("/{id}")
+  public ResponseEntity<Collections> deleteCollection(@PathVariable Integer id) {
+    if(!collectionsRepo.existsById(id)){
+      return ResponseEntity.notFound().build();
+    }
+    try{
+      collectionsRepo.deleteById(id);
+      return ResponseEntity.noContent().build();
+    } catch (DataIntegrityViolationException e){
+      return ResponseEntity.status(HttpStatus.CONFLICT).build();
     }
   }
 }
