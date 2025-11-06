@@ -34,7 +34,7 @@ public class PosesController {
         int randomIndex = random.nextInt(allPoses.size());
         return allPoses.get(randomIndex);
     }
-    
+
     // style filtering 
     // i want this route to be /poses/{style}
     @GetMapping("/style/{style}") 
@@ -51,4 +51,8 @@ public class PosesController {
 
 
     // search by keyword in description 
+    @GetMapping("/search/{keyword}")
+    public List<Poses> seachByDescription(@PathVariable String keyword){
+        return posesRepo.findByDescriptionContainingIgnoreCase(keyword);
+    }
     }
