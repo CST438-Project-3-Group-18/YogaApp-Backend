@@ -15,16 +15,19 @@ public class Poses {
     private int id;
     private String name;
     private String description;
-    private String style;
-    private String difficulty;
-    private String image;
+    private String image;       
+    private String difficulty;  
+    private String style; 
 
     public Poses() {
     }
 
-    public Poses(String name, String description) {
+    public Poses(String name, String description, String image, String difficulty, String style) {
         this.name = name;
         this.description = description;
+        this.image = image;
+        this.difficulty = difficulty;
+        this.style = style;
     }
 
     public int getId() {
@@ -50,28 +53,21 @@ public class Poses {
     public void setDescription(String description) {
         this.description = description;
     }
+    public String getImage() { 
+        return image; }
 
-    public String getStyle() {
-        return style;
-    }
+    public void setImage(String image) { 
+        this.image = image; }
 
-    public void setStyle(String style) {
-        this.style = style;
-    }
+    public String getDifficulty() { 
+        return difficulty; }
 
-    public String getDifficulty() {
-        return difficulty;
-    }
+    public void setDifficulty(String difficulty) { 
+        this.difficulty = difficulty; }
 
-    public void setDifficulty(String difficulty) {
-        this.difficulty = difficulty;
-    }
+    public String getStyle() { 
+        return style; }
 
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
+    public void setStyle(String style) { 
+        this.style = style; }
 }
