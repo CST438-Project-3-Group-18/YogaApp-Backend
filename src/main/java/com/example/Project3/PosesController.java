@@ -3,13 +3,17 @@ package com.example.Project3;
 import java.util.List;
 import java.util.Random;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.Project3.entities.Poses;
 
 @RestController
+@CrossOrigin(origins = "*")
+@RequestMapping("/poses") 
 public class PosesController {
     private final PosesRepository posesRepo;
     private final Random random = new Random();
@@ -18,13 +22,13 @@ public class PosesController {
         this.posesRepo = posesRepo;
     }
 
-    @GetMapping("/poses")
+    @GetMapping
     public List<Poses> all(){
         return posesRepo.findAll();
     }
 
     //get random poses
-    @GetMapping("/poses/random")
+    @GetMapping("/random")
     public Poses randomPoses(){
         List<Poses> allPoses = posesRepo.findAll();
         int randomIndex = random.nextInt(allPoses.size());
