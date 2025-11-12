@@ -10,7 +10,7 @@ import jakarta.persistence.Id;
 public class Collections {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private int id;
+  private Integer id;
   private int userId;
   private String name;
 
@@ -21,7 +21,7 @@ public class Collections {
     this.name = name;
   }
 
-  public void setId(int id) {
+  public void setId(Integer id) {
     this.id = id;
   }
 
@@ -33,7 +33,7 @@ public class Collections {
     this.name = name;
   }
 
-  public int getId() {
+  public Integer getId() {
     return id;
   }
 
