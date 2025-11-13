@@ -4,6 +4,7 @@ import com.example.Project3.entities.Collections;
 import java.net.URI;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import org.springframework.http.ResponseEntity;
@@ -21,30 +22,28 @@ public class CollectionsController {
     this.collectionsRepo = collectionsRepo;
   }
 
-//  @GetMapping ("/collections")
+  @GetMapping
   List<Collections> getCollections(){
     return collectionsRepo.findAll();
   }
+
   @GetMapping("/{id}")
-  ResponseEntity<Collections> getCollection(@PathVariable Integer id) {
+  ResponseEntity<Collections> getCollection(@PathVariable("id") Integer id) {
     return collectionsRepo.findById(id)
         .map(ResponseEntity::ok)
         .orElse(ResponseEntity.notFound().build());
   }
-  @PostMapping
+
+  @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<Collections> createCollection(@RequestBody Collections data) {
-    try{
-      data.setId(null);
-      Collections saved = collectionsRepo.save(data);
-      return ResponseEntity.
-          created(URI.create("/collections/" + saved.getId()))
-          .body(saved);
-    } catch (Exception e){
-      return ResponseEntity.badRequest().build();
-    }
+    data.setId(null);
+    Collections saved = collectionsRepo.save(data);
+    return ResponseEntity
+        .created(URI.create("/collections/" + saved.getId()))
+        .body(saved);
   }
   @DeleteMapping("/{id}")
-  public ResponseEntity<Collections> deleteCollection(@PathVariable Integer id) {
+  public ResponseEntity<Collections> deleteCollection(@PathVariable("id") Integer id) {
     if(!collectionsRepo.existsById(id)){
       return ResponseEntity.notFound().build();
     }

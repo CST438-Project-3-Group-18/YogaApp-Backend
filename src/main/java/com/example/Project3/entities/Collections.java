@@ -1,17 +1,24 @@
 package com.example.Project3.entities;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
-//@Table(name = "collections")
+@Table(name = "collections")
 public class Collections {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int id;
+  @Column(name = "user_id", nullable = false)
+
+  @JsonProperty("user_id")
   private int userId;
+  @Column(nullable= false)
   private String name;
 
   public Collections() {
