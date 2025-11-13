@@ -23,8 +23,8 @@ public class Collections {
 
   public Collections() {
   }
-  public Collections(int collectionId, String name) {
-    this.userId = collectionId;
+  public Collections(int userId, String name) {
+    this.userId = userId;
     this.name = name;
   }
 
@@ -32,15 +32,15 @@ public class Collections {
     this.id = id;
   }
 
-  public void setUserId(int collectionId) {
-    this.userId = collectionId;
+  public void setUserId(int userId) {
+    this.userId = userId;
   }
 
   public void setName(String name) {
     this.name = name;
   }
 
-  public int getId() {
+  public Integer getId() {
     return id;
   }
 
