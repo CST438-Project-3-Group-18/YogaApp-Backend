@@ -21,12 +21,13 @@ public class CollectionsController {
     this.collectionsRepo = collectionsRepo;
   }
 
-//  @GetMapping ("/collections")
+  @GetMapping
   List<Collections> getCollections(){
     return collectionsRepo.findAll();
   }
+
   @GetMapping("/{id}")
-  ResponseEntity<Collections> getCollection(@PathVariable Integer id) {
+  ResponseEntity<Collections> getCollection(@PathVariable("id") Integer id) {
     return collectionsRepo.findById(id)
         .map(ResponseEntity::ok)
         .orElse(ResponseEntity.notFound().build());
