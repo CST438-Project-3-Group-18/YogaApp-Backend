@@ -38,14 +38,20 @@ public class CollectionsController {
         .orElse(ResponseEntity.notFound().build());
   }
 
-  @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<Collections> createCollection(@RequestBody Collections data) {
-    data.setId(null);
-    Collections saved = collectionsRepo.save(data);
-    return ResponseEntity
-        .created(URI.create("/collections/" + saved.getId()))
-        .body(saved);
-  }
+@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+public ResponseEntity<?> create(@RequestBody Collections body) {
+    try{
+      if(body.getName() == null || body.getName().isBlank()){
+        return ResponseEntity.badRequest().body("Name is required");
+      }
+      Collections saved = collectionsRepo.save(body);
+      return ResponseEntity
+          .created(URI.create("/collections/" + saved.getId()))
+          .body(saved);
+    } catch (DataIntegrityViolationException e){
+      return ResponseEntity.unprocessableEntity().body("Invalid data: " + e.getMostSpecificCause().getMessage());
+    }
+}
   @DeleteMapping("/{id}")
   public ResponseEntity<Collections> deleteCollection(@PathVariable("id") Integer id) {
     if(!collectionsRepo.existsById(id)){
