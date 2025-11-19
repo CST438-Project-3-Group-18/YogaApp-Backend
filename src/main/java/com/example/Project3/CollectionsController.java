@@ -26,11 +26,12 @@ public class CollectionsController {
   }
 
   //collection by userId
-  public List<Collections> getCollectionsByUser(@RequestParam int userId) {
+  @GetMapping("/user/{userId}")
+  public List<Collections> getCollectionsByUser(@PathVariable int userId) {
     return collectionsRepo.findByUserId(userId);
   }
 
-  //collection by id
+  //collection by id (primary key)
   @GetMapping("/{id}")
   ResponseEntity<Collections> getCollection(@PathVariable("id") Integer id) {
     return collectionsRepo.findById(id)
