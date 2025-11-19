@@ -7,6 +7,7 @@ import java.util.List;
 
 public interface CollectionItemsRepo extends JpaRepository<com.example.Project3.entities.CollectionItems, Integer> {
 
+    //get items in a collection with pose details
   @Query(value = """
       SELECT p.id   AS id,
              p.name AS name,
@@ -19,4 +20,21 @@ public interface CollectionItemsRepo extends JpaRepository<com.example.Project3.
       ORDER BY ci.position ASC
     """, nativeQuery = true)
   List<PoseSummary> findPoseSummaries(@Param("collectionId") Integer collectionId);
+
+  //check for duplicate poses in a collection
+  @Query("""
+    select count(ci) > 0
+    from CollectionItems ci
+    where ci.collection.id = :collectionId and ci.pose.id = :poseId
+  """)
+  boolean existsInCollection(@Param("collectionId") Integer collectionId, @Param("poseId") Integer poseId);
+
+// append item to the end of a collection + positioning
+  @Query("""
+    select coalesce(max(ci.position), 0)
+    from CollectionItems ci
+    where ci.collection.id = :collectionId
+  """)
+  Integer maxPosition(@Param("collectionId") Integer collectionId);
 }
+
