@@ -1,6 +1,8 @@
 package com.example.Project3;
 
 import com.example.Project3.entities.Collections;
+import com.example.Project3.projections.PoseSummary;
+
 import java.net.URI;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -14,9 +16,11 @@ import org.springframework.http.ResponseEntity;
 @CrossOrigin(origins = { "http://localhost:8081", "http://127.0.0.1:8081" })
 public class CollectionsController {
   private final CollectionsRepo collectionsRepo;
+  private final CollectionItemsRepo collectionItemsRepo;
 
-  public CollectionsController(CollectionsRepo collectionsRepo) {
+  public CollectionsController(CollectionsRepo collectionsRepo, CollectionItemsRepo collectionItemsRepo) {
     this.collectionsRepo = collectionsRepo;
+    this.collectionItemsRepo = collectionItemsRepo;
   }
 
   //list all
@@ -57,5 +61,12 @@ public class CollectionsController {
     } catch (DataIntegrityViolationException e){
       return ResponseEntity.status(HttpStatus.CONFLICT).build();
     }
+  }
+
+  //get collection items
+@GetMapping("/{id}/items")
+  public ResponseEntity<List<PoseSummary>> listItems(@PathVariable Integer id) {
+    if (!collectionsRepo.existsById(id)) return ResponseEntity.notFound().build();
+    return ResponseEntity.ok(collectionItemsRepo.findPoseSummaries(id));
   }
 }
