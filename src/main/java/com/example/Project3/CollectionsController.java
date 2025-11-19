@@ -52,16 +52,31 @@ public ResponseEntity<?> create(@RequestBody Collections body) {
       return ResponseEntity.unprocessableEntity().body("Invalid data: " + e.getMostSpecificCause().getMessage());
     }
 }
+  // Deletes an item by its id
   @DeleteMapping("/{id}")
-  public ResponseEntity<Collections> deleteCollection(@PathVariable("id") Integer id) {
-    if(!collectionsRepo.existsById(id)){
+  public ResponseEntity<?> delete(@PathVariable Integer id) {
+    if (!collectionsRepo.existsById(id)) {
       return ResponseEntity.notFound().build();
     }
-    try{
+    try {
       collectionsRepo.deleteById(id);
-      return ResponseEntity.noContent().build();
-    } catch (DataIntegrityViolationException e){
-      return ResponseEntity.status(HttpStatus.CONFLICT).build();
+      return ResponseEntity.noContent().build(); // 204
+    } catch (DataIntegrityViolationException e) {
+      return ResponseEntity.status(HttpStatus.CONFLICT)
+          .body("Cannot delete collection: it is referenced by other records.");
     }
   }
+//  @DeleteMapping("/{id}")
+//  public ResponseEntity<Collections> deleteCollection(@PathVariable("id") Integer id) {
+//    if(!collectionsRepo.existsById(id)){
+//      return ResponseEntity.notFound().build();
+//    }
+//    try{
+//      collectionsRepo.deleteById(id);
+//      return ResponseEntity.noContent().build();
+//    } catch (DataIntegrityViolationException e){
+//      return ResponseEntity.status(HttpStatus.CONFLICT).build();
+//    }
+//  }
+
 }
