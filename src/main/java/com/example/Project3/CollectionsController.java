@@ -66,17 +66,5 @@ public ResponseEntity<?> create(@RequestBody Collections body) {
           .body("Cannot delete collection: it is referenced by other records.");
     }
   }
-//  @DeleteMapping("/{id}")
-//  public ResponseEntity<Collections> deleteCollection(@PathVariable("id") Integer id) {
-//    if(!collectionsRepo.existsById(id)){
-//      return ResponseEntity.notFound().build();
-//    }
-//    try{
-//      collectionsRepo.deleteById(id);
-//      return ResponseEntity.noContent().build();
-//    } catch (DataIntegrityViolationException e){
-//      return ResponseEntity.status(HttpStatus.CONFLICT).build();
-//    }
-//  }
 
 }
