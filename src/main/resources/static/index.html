@@ -1,0 +1,24 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Yoga App - Landing</title>
+</head>
+<body>
+  <h1>Welcome to Yoga App</h1>
+  <button id="googleBtn">Continue with Google</button>
+  <br/><br/>
+  <button id="createAccountBtn">Create Account</button>
+  <button id="loginBtn">Login</button>
+
+  <script>
+    document.getElementById('createAccountBtn').addEventListener('click', () => {
+      window.location.href = '/register.html';
+    });
+    document.getElementById('loginBtn').addEventListener('click', () => {
+      window.location.href = '/login.html';
+    });
+    // The google button flow is unchanged; implement in frontend as before
+  </script>
+</body>
+</html>
