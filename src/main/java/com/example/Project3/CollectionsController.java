@@ -78,4 +78,11 @@ public ResponseEntity<?> create(@RequestBody Collections body) {
     }
   }
 
+  //get items in a collection with pose details
+  @GetMapping("/{id}/items")
+  public List<PoseSummary> getItemsForCollection(@PathVariable("id") Integer id) {
+  return collectionItemsRepo.findPoseSummaries(id);
+}
+
+
 }
