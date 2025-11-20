@@ -26,11 +26,12 @@ public class CollectionsController {
   }
 
   //collection by userId
-  public List<Collections> getCollectionsByUser(@RequestParam int userId) {
+  @GetMapping("/user/{userId}")
+  public List<Collections> getCollectionsByUser(@PathVariable int userId) {
     return collectionsRepo.findByUserId(userId);
   }
 
-  //collection by id
+  //collection by id (primary key)
   @GetMapping("/{id}")
   ResponseEntity<Collections> getCollection(@PathVariable("id") Integer id) {
     return collectionsRepo.findById(id)
@@ -38,24 +39,33 @@ public class CollectionsController {
         .orElse(ResponseEntity.notFound().build());
   }
 
-  @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<Collections> createCollection(@RequestBody Collections data) {
-    data.setId(null);
-    Collections saved = collectionsRepo.save(data);
-    return ResponseEntity
-        .created(URI.create("/collections/" + saved.getId()))
-        .body(saved);
-  }
+@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+public ResponseEntity<?> create(@RequestBody Collections body) {
+    try{
+      if(body.getName() == null || body.getName().isBlank()){
+        return ResponseEntity.badRequest().body("Name is required");
+      }
+      Collections saved = collectionsRepo.save(body);
+      return ResponseEntity
+          .created(URI.create("/collections/" + saved.getId()))
+          .body(saved);
+    } catch (DataIntegrityViolationException e){
+      return ResponseEntity.unprocessableEntity().body("Invalid data: " + e.getMostSpecificCause().getMessage());
+    }
+}
+  // Deletes an item by its id
   @DeleteMapping("/{id}")
-  public ResponseEntity<Collections> deleteCollection(@PathVariable("id") Integer id) {
-    if(!collectionsRepo.existsById(id)){
+  public ResponseEntity<?> delete(@PathVariable Integer id) {
+    if (!collectionsRepo.existsById(id)) {
       return ResponseEntity.notFound().build();
     }
-    try{
+    try {
       collectionsRepo.deleteById(id);
-      return ResponseEntity.noContent().build();
-    } catch (DataIntegrityViolationException e){
-      return ResponseEntity.status(HttpStatus.CONFLICT).build();
+      return ResponseEntity.noContent().build(); // 204
+    } catch (DataIntegrityViolationException e) {
+      return ResponseEntity.status(HttpStatus.CONFLICT)
+          .body("Cannot delete collection: it is referenced by other records.");
     }
   }
+
 }
